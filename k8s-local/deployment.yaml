@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aks-lab-app
+  namespace: akslab
+  labels:
+    app: aks-lab-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aks-lab-app
+  template:
+    metadata:
+      labels:
+        app: aks-lab-app
+    spec:
+      containers:
+        - name: aks-lab-app
+          image: aks-lab-app:v1
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 15
