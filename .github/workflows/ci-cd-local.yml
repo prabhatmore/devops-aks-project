@@ -1,16 +1,17 @@
-name: Build and Deploy (local minikube via self-hosted runner)
+name: Build and Deploy (local minikube via self-hosted runner + ArgoCD)
 
 on:
   push:
     branches: [main]
     paths:
       - 'app/**'
-      - 'k8s/**'
-      - 'k8s-local/**'
       - '.github/workflows/ci-cd-local.yml'
 
+permissions:
+  contents: write
+
 jobs:
-  build-and-deploy:
+  build-and-update:
     runs-on: self-hosted
 
     steps:
@@ -21,14 +22,11 @@ jobs:
         run: |
           eval "$(minikube docker-env)"
           docker build -t aks-lab-app:${{ github.sha }} ./app
-          docker tag aks-lab-app:${{ github.sha }} aks-lab-app:v1
 
-      - name: Deploy to local cluster
+      - name: Update image tag in git (ArgoCD will deploy it)
         run: |
-          kubectl apply -f k8s/namespace.yaml
-          kubectl apply -f k8s-local/deployment.yaml
-          kubectl apply -f k8s/service.yaml
-          kubectl apply -f k8s/ingress.yaml
-          kubectl apply -f k8s/hpa.yaml
-          kubectl rollout restart deployment/aks-lab-app -n akslab
-          kubectl rollout status deployment/aks-lab-app -n akslab
+          sed -i '' "s#image: aks-lab-app:.*#image: aks-lab-app:${{ github.sha }}#" argocd-manifests/deployment.yaml
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git commit -am "ci: deploy aks-lab-app:${{ github.sha }}" || echo "no changes to commit"
+          git push
