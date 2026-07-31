@@ -1,0 +1,17 @@
+# Risk-accepted CVEs — no vendor-fixed version available yet as of 2026-07-31.
+# Base OS packages (perl, ncurses, mount/blkid utilities) shipped with
+# python:3.12-slim, not invoked by this Flask app at runtime.
+# Review and remove entries here once Debian ships fixes.
+
+CVE-2026-53615
+CVE-2026-41992
+CVE-2026-54369
+CVE-2025-69720
+CVE-2026-13221
+CVE-2026-42496
+CVE-2026-57433
+CVE-2026-8376
+CVE-2026-42497
+CVE-2026-48962
+CVE-2026-57432
+CVE-2026-9538
