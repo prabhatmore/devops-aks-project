@@ -9,7 +9,7 @@ APP_VERSION = os.environ.get("APP_VERSION", "1.0.0")
 @app.route("/")
 def home():
     return jsonify({
-        "message": "Hello from AKS! (via self-hosted CI/CD)",
+        "message": "Hello from AKS! (via ArgoCD GitOps)",
         "hostname": socket.gethostname(),
         "version": APP_VERSION
     })
