@@ -3,6 +3,8 @@ kind: Service
 metadata:
   name: aks-lab-app
   namespace: akslab
+  labels:
+    app: aks-lab-app
 spec:
   type: ClusterIP
   selector:
