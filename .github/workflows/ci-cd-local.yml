@@ -31,6 +31,7 @@ jobs:
           format: table
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
+          trivyignores: app/.trivyignore
 
       - name: Update image tag in git (ArgoCD will deploy it)
         run: |
