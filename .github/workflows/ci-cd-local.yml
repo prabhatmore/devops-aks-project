@@ -20,6 +20,7 @@ jobs:
 
       - name: Build image inside minikube's docker daemon
         run: |
+          minikube docker-env | grep '^export' | sed 's/export //; s/"//g' >> "$GITHUB_ENV"
           eval "$(minikube docker-env)"
           docker build -t aks-lab-app:${{ github.sha }} ./app
 
