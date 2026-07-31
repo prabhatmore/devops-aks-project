@@ -22,7 +22,7 @@ jobs:
         run: |
           minikube docker-env | grep '^export' | sed 's/export //; s/"//g' >> "$GITHUB_ENV"
           eval "$(minikube docker-env)"
-          docker build -t aks-lab-app:${{ github.sha }} ./app
+          docker build --pull -t aks-lab-app:${{ github.sha }} ./app
 
       - name: Scan image for vulnerabilities (Trivy)
         uses: aquasecurity/trivy-action@v0.36.0
