@@ -23,6 +23,14 @@ jobs:
           eval "$(minikube docker-env)"
           docker build -t aks-lab-app:${{ github.sha }} ./app
 
+      - name: Scan image for vulnerabilities (Trivy)
+        uses: aquasecurity/trivy-action@0.24.0
+        with:
+          image-ref: aks-lab-app:${{ github.sha }}
+          format: table
+          exit-code: '1'
+          severity: 'CRITICAL,HIGH'
+
       - name: Update image tag in git (ArgoCD will deploy it)
         run: |
           sed -i '' "s#image: aks-lab-app:.*#image: aks-lab-app:${{ github.sha }}#" argocd-manifests/deployment.yaml
