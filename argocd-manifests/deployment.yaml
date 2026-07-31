@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: aks-lab-app
-          image: aks-lab-app:5d31cc49aff5445a5e302a40db673b9505962fa9
+          image: aks-lab-app:6aa91b45b51820a9b5c2185c4a224e2ac39d090d
           imagePullPolicy: Never
           ports:
             - containerPort: 5000
