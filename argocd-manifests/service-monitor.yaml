@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: aks-lab-app
+  namespace: akslab
+  labels:
+    release: kube-prometheus-stack
+spec:
+  selector:
+    matchLabels:
+      app: aks-lab-app
+  namespaceSelector:
+    matchNames:
+      - akslab
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s
