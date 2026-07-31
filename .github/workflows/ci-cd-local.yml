@@ -24,7 +24,7 @@ jobs:
           docker build -t aks-lab-app:${{ github.sha }} ./app
 
       - name: Scan image for vulnerabilities (Trivy)
-        uses: aquasecurity/trivy-action@0.36.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: aks-lab-app:${{ github.sha }}
           format: table
