@@ -6,7 +6,7 @@ metadata:
   labels:
     app: aks-lab-app
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: aks-lab-app
